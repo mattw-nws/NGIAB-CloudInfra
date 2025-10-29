@@ -226,6 +226,7 @@ print_usage() {
     echo -e "${BCyan}  -d [path]:${Color_Off} Designates the provided path as the data directory to evaluate."
     echo -e "${BCyan}  -h:${Color_Off} Displays usage information, then exits."
     echo -e "${BCyan}  -i [image]:${Color_Off} Specifies which container image of the TEEHR container to run."
+    echo -e "${BCyan}  -p:${Color_Off} Use Podman instead of Docker."
     echo -e "${BCyan}  -r:${Color_Off} Retains previous console output when launching the script."
     echo -e "${BCyan}  -t [tag]:${Color_Off} Specifies which container image tag of the TEEHR container to run."
     echo -e "${BCyan}  -y:${Color_Off} Launches the evaluation workflow immediately, skipping the initial confirmation prompt."
@@ -236,9 +237,9 @@ print_usage() {
 while getopts 'd:phrt:y' flag; do
     case "${flag}" in
         d) DATA_FOLDER_PATH="${OPTARG}" ;;
-        p) DOCKER_CMD="podman" ;;
         h) print_usage
            exit 1 ;;
+        p) DOCKER_CMD="podman" ;;
         r) CLEAR_CONSOLE=false ;;
         i) IMAGE_NAME="${OPTARG}" ;;
         t) FORCED_IMAGE_TAG="${OPTARG}" ;;

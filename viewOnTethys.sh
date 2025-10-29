@@ -693,6 +693,7 @@ print_usage() {
     echo -e "${BCyan}  -h:${Color_Off} Displays usage information, then exits."
     echo -e "${BCyan}  -i [image]:${Color_Off} Specifies which container image of the visualizer to run."
     echo -e "${BCyan}  -n:${Color_Off} Launches the visualizer immediately without importing a data directory."
+    echo -e "${BCyan}  -p:${Color_Off} Use Podman instead of Docker."
     echo -e "${BCyan}  -r:${Color_Off} Retains previous console output when launching the script."
     echo -e "${BCyan}  -t [tag]:${Color_Off} Specifies which container image tag of the visualizer to run."
     echo -e "${BCyan}  -y:${Color_Off} Immediately requests to import a data directory."
@@ -700,13 +701,14 @@ print_usage() {
 
 
 # Pre-script execution
-while getopts 'd:hi:nrt:y' flag; do
+while getopts 'd:hi:nprt:y' flag; do
     case "${flag}" in
         d) DATA_FOLDER_PATH="${OPTARG}" ;;
         h) print_usage
            exit 1 ;;
         i) TETHYS_REPO="${OPTARG}" ;;
         n) IMPORT_GAGE="no";;
+        p) DOCKER_CMD="podman" ;;
         r) CLEAR_CONSOLE=false ;;
         t) TETHYS_TAG="${OPTARG}" ;;
         y) IMPORT_GAGE="yes" ;;
