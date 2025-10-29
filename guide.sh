@@ -174,6 +174,7 @@ print_usage() {
     echo -e "${BCyan}  -d [path]:${Color_Off} Designates the provided path as the data directory to import into the visualizer."
     echo -e "${BCyan}  -h:${Color_Off} Displays usage information, then exits."
     echo -e "${BCyan}  -i [image]:${Color_Off} Specifies which Docker image of NGIAB to run."
+    echo -e "${BCyan}  -p:${Color_Off} Use Podman instead of Docker."
     echo -e "${BCyan}  -r:${Color_Off} Retains previous console output when launching the script."
     echo -e "${BCyan}  -t [tag]:${Color_Off} Specifies which Docker image tag of NGIAB to run."
 }
@@ -183,10 +184,10 @@ print_usage() {
 while getopts 'd:phi:rt:' flag; do
     case "${flag}" in
         d) HOST_DATA_PATH="${OPTARG}" ;;
-        p) DOCKER_CMD="podman" ;;
         h) print_usage
            exit 1 ;;
         i) NGEN_IMAGE_NAME="${OPTARG}" ;;
+        p) DOCKER_CMD="podman" ;;
         r) CLEAR_CONSOLE=false ;;
         t) NGEN_IMAGE_TAG="${OPTARG}"
            CUSTOM_TAG_USED=true ;;
@@ -467,6 +468,7 @@ echo -e "  ${INFO_MARK} ${BCyan}Container image: ${BWhite}$IMAGE_NAME${Color_Off
 sleep 2
 
 echo -e "\n${ARROW} ${BYellow}Launching NextGen container...${Color_Off}"
+echo $DOCKER_CMD run --rm -it -v "$HOST_DATA_PATH:/ngen/ngen/data" "$IMAGE_NAME" /ngen/ngen/data/
 $DOCKER_CMD run --rm -it -v "$HOST_DATA_PATH:/ngen/ngen/data" "$IMAGE_NAME" /ngen/ngen/data/
 
 # Final output count with improved presentation
